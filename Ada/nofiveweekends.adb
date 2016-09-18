@@ -2,6 +2,7 @@ with Ada.Text_IO, Ada.Integer_Text_IO;
 with Ada.Strings, Ada.Strings.Unbounded, Ada.Strings.Unbounded.Text_IO;
 use Ada.Text_IO, Ada.Integer_Text_IO;
 use Ada.Strings, Ada.Strings.Unbounded, Ada.Strings.Unbounded.Text_IO;
+
 procedure noFiveWeekends is
     type DAYS_OF_WEEK is (Sun, Mon, Tue, Wed, Thu, Fri, Sat);
 
@@ -11,6 +12,8 @@ procedure noFiveWeekends is
     yearsWithoutFiveWeekends : Unbounded_String;
     isLeapYear : Boolean;
 
+    --Function to calculate which day of the week a given day is
+    --Input is the number day in the year, output is the day of the week
     function whichDayOfWeek(day: in Integer) return DAYS_OF_WEEK is
         result : Integer;
     begin
@@ -53,6 +56,6 @@ begin
             firstDayOfYear := whichDayOfWeek(366);
         end if;
     end loop;
-    Trim(yearsWithoutFiveWeekends, Both);
-    Put(yearsWithoutFiveWeekends);
+    Trim(yearsWithoutFiveWeekends, Both); --Trim the whitespace on the sides
+    Put(yearsWithoutFiveWeekends); --Finally print the output
 end noFiveWeekends;
