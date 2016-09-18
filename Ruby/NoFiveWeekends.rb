@@ -42,4 +42,4 @@ yearsWithoutFiveWeekends = Array[];
     firstDayOfYear = nextYearFirstDay(firstDayOfYear, isLeapYear);
 end
 
-puts yearsWithoutFiveWeekends.join(", "); #print all values separated by ", "
+puts yearsWithoutFiveWeekends.join(" "); #print all values separated by a space
