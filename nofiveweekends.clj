@@ -1,4 +1,4 @@
-(ns projectOneClojureV2)
+(ns nofiveweekends)
 
 (def isLeapYear 0)
 (def numDaysInYear 365)
