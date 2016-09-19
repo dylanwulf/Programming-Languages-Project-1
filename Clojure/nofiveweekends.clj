@@ -1,71 +1,69 @@
 (ns nofiveweekends)
 
-(def isLeapYear 0)
-(def numDaysInYear 365)
+;;Method to determine which day of the week the next year
+;;starts on given the first day of the current year and
+;;whether or not it is a leap year
+(defn nextYearFirstDay [currentDayFirstYear, isLeapYear] (
+
+   if (= isLeapYear 1)
+
+     (do ;;366 days if leap year
+        (def firstDay (mod (+ currentDayFirstYear 366) 7)))
+
+     (do ;;365 days if normal year
+       (def firstDay (mod (+ currentDayFirstYear 365) 7)))))
+
+;;Method to determine if a year does not have a month
+;;with 5 weekends. This only happens on leap years that
+;;start on a Sunday and normal years that start on Monday
+(defn hasNoFiveWeekends [isLeapYear, firstDayOfYear] (
+                                                       
+   if (or (and (= firstDayOfYear 0) (= isLeapYear 1))
+          (and (= firstDayOfYear 1) (= isLeapYear 0)))
+                                                       
+     (do
+        (def noFiveWeekends 1))
+                                                       
+     (do
+        (def noFiveWeekends 0))))
+
+
+;;declare the year range constants
 (def startYear 2000)
 (def endYear 2100)
-(def day 1)
-(def dayOfWeek 6)
-(def fiveWeekends 0)
-(def currentDay 1)
 
-;;Function to check if x is a leap year
-(defn checkLeapYear [currentYear] (
-
-   if (= (mod currentYear 4) 0)
-
-     (do
-       (def numDaysInYear 366) ;; is a leap year
-       (def isLeapYear 1)
-       )
-
-     (do
-       (def numDaysInYear 365) ;; not a leap year
-       (def isLeapYear 0)
-       )))
-
-(checkLeapYear startYear)
+;;Sunday is 0, Monday is 1, Tuesday is 2, etc.
+(def firstDayOfYear 6);;Jan 1, 2000 was a Saturday
+(def isLeapYear)
 
 
-(def currentYear)
+;; loop through the specified year range
+(loop [startYear 2000]
+  (when (<= startYear endYear)
 
-(loop [currentYear 2000]
-  (when (<= currentYear endYear)
+  (def isLeapYear)
 
-    (checkLeapYear currentYear) 
-    (def fiveWeekends 0)
+  ;;Check if current year is a leap year
+  (if (= (mod startYear 4) 0)
 
-    ;; loop through the days of the year
-    (loop [currentDay 1]
-      (when (<= currentDay numDaysInYear)
-        ;;(print currentDay)
+    (do
+      (def isLeapYear 1))
 
-          ;;Check if 5 weekends should be true
-          (cond
+    (do
+      (def isLeapYear 0)))
+    
 
-            (and (= dayOfWeek 5)(= fiveWeekends 0)(= isLeapYear 1)
-                 (or (= currentDay 1)(= currentDay 61)(= currentDay 122)
-                 (= currentDay 183)(= currentDay 214)(= currentDay 275)
-                 (= currentDay 336))) (def fiveWeekends 1)
+  (def noFiveWeekends 2)
+  
+  (hasNoFiveWeekends isLeapYear firstDayOfYear)
 
-            (and (= dayOfWeek 5)(= fiveWeekends 0)(= isLeapYear 0)
-                 (or (= currentDay 1)(= currentDay 60)(= currentDay 121)
-                 (= currentDay 182)(= currentDay 213)(= currentDay 274)
-                 (= currentDay 335))) (def fiveWeekends 1)
-            )
+  ;;Print all non-five weekend years
+  (if (= noFiveWeekends 1)
 
-          (cond
-            (= dayOfWeek 7)(def dayOfWeek 1)
-            (= dayOfWeek 6)(def dayOfWeek 7)
-            (= dayOfWeek 5)(def dayOfWeek 6)
-            (= dayOfWeek 4)(def dayOfWeek 5)
-            (= dayOfWeek 3)(def dayOfWeek 4)
-            (= dayOfWeek 2)(def dayOfWeek 3)
-            (= dayOfWeek 1)(def dayOfWeek 2)
-          )
+    (do
+      (print startYear ", ")))
 
-        ;;(println " + Day: " dayOfWeek)
-
-          (cond (and (= currentDay 365) (= fiveWeekends 0)) (print  currentYear "," ))
-            (recur (+ currentDay 1))))
-    (recur (+ currentYear 1))))
+ (nextYearFirstDay firstDayOfYear isLeapYear)
+ (def firstDayOfYear firstDay)
+ 
+ (recur (+ startYear 1))))
